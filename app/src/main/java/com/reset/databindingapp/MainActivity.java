@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         person = new Person();
-        person.setName("焦利宗");
+        person.setName("jiao");
         person.setAge(33);
 
         binding.setPerson(person);
