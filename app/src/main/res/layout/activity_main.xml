@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 使用layout标签作为根布局 -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 使用data标签绑定数据-->
+    <data>
+
+        <!-- import 标签的作用是引入类，和java代码一样 -->
+        <!-- 因为在@{}中使用了View类。我们必须将包引入 -->
+        <import type="android.view.View" />
+        <!-- 引入类，实现静态方法 -->
+        <import type="com.reset.databindingapp.domain.Utils" />
+
+        <!-- 使用variable标签定义数据名和数据类型 -->
+        <variable
+            name="person"
+            type="com.reset.databindingapp.domain.Person" />
+
+        <!-- 定义PersonExtra-->
+        <variable
+            name="personExtra"
+            type="com.reset.databindingapp.domain.PersonExtra" />
+
+        <!-- 定义处理事件的类 -->
+        <variable
+            name="handler"
+            type="com.reset.databindingapp.MainActivity.NameHandler" />
+
+
+    </data>
+
+    <!-- 平常使用的根布局放到这里 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- 定义onTextChanged事件，添加事件的处理方法handler.onTextChanged -->
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_name"
+            android:onTextChanged="@{handler.onTextChanged}"
+            android:padding="10dp" />
+
+        <!-- 通过@{}方式访问绑定的数据 -->
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:padding="10dp"
+            android:text="@{Utils.formatName(person.name)}"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="18sp" />
+
+        <!-- 使用personExtra.address-->
+
+        <!-- visibility属性使用了三元表达式，如果person的name为null,就设置为View.GONE-->
+        <!-- 由于使用了View类，需要在data标签引入View类 -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@{personExtra.address != null ? personExtra.address : @string/app_name}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:visibility="@{personExtra.address != null ? View.VISIBLE : View.GONE}" />
+
+        <!-- personExtra.address ?? @string/app_name 等同于 personExtra.address != null ? personExtra.address : @string/app_name -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@{personExtra.address ?? @string/app_name}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <!-- 拼接字符 -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@{personExtra.address + @string/app_name}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</layout>

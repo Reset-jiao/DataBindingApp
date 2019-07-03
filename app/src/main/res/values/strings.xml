@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DataBindingApp</string>
+    <string name="input_name">输入姓名</string>
+</resources>
